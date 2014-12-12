@@ -26,56 +26,9 @@ public class UserInfo implements Serializable{
         this.name = name;
         this.address = address;
         this.phone = phone;
-        if (UserValidator.validateEmail(email)){
-            this.email = email;
-        }else{
-            throw new UserInfoException(new Exception("email format is not correct"));
-        }
+        this.setEmail(email);
 
 
-    }
-
-
-
-    public String getName() {
-
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPhone() {
-        return phone;
-    }
-
-    public void setPhone(int phone) {
-        this.phone = phone;
     }
 
     public UserInfo(String name, String address, int phone, String email) {
@@ -83,8 +36,24 @@ public class UserInfo implements Serializable{
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.email = email;
+        this.setEmail(email);
     }
+
+        public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        if (UserValidator.validateEmail(email)){
+            this.email = email;
+        }else{
+            throw new UserInfoException(new Exception("email format is not correct"));
+        }
+    }
+
+
+
+
 
     @Override
     public boolean equals(Object o) {

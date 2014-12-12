@@ -42,12 +42,13 @@ public class FileSavingTest {
 
     }
 
-    @Ignore
-    public void testReadUserInfos() throws Exception {
+    @Test
+    public void testReadUserInfoswWithTrue() throws Exception {
         userInfos = fileSaving.readUserInfos();
         assertFalse(userInfos.isEmpty());
 
     }
+
 
     @Test(expected = UserInfoException.class)
     public void newUserByEmailWithException() {
