@@ -58,10 +58,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    67.4%
+    76.7%
   </span>
   <span class="absValue">
-    (29/ 43)
+    (33/ 43)
   </span>
 </td>
 </tr>
@@ -121,7 +121,7 @@
 <i>47</i>&nbsp;     * @return userInfos
 <i>48</i>&nbsp;     * @throws UserInfoException
 <i>49</i>&nbsp;     */
-<i>50</i>&nbsp;    public  List&lt;UserInfo&gt; readUserInfos(String filePath) {
+<i>50</i>&nbsp;    public  List&lt;UserInfo&gt; readUserInfos(String filePath) throws ClassNotFoundException {
 <b class="fc"><i>51</i>&nbsp;        List&lt;UserInfo&gt; members = null;</b>
 <i>52</i>&nbsp;
 <i>53</i>&nbsp;        try {
@@ -139,26 +139,21 @@
 <b class="fc"><i>65</i>&nbsp;            ByteArrayInputStream bais = new ByteArrayInputStream(b);</b>
 <b class="fc"><i>66</i>&nbsp;            ObjectInputStream ois = new ObjectInputStream(bais);</b>
 <b class="fc"><i>67</i>&nbsp;            members = (List&lt;UserInfo&gt;) ois.readObject();</b>
-<b class="nc"><i>68</i>&nbsp;            ois.close();</b>
-<b class="nc"><i>69</i>&nbsp;            bais.close();</b>
-<b class="nc"><i>70</i>&nbsp;        }  catch (ClassNotFoundException e) {</b>
-<b class="nc"><i>71</i>&nbsp;            throw new UserInfoException(e,ErrorCode.CLASS_NOT_FOUND);</b>
-<b class="nc"><i>72</i>&nbsp;        } catch (FileNotFoundException e) {</b>
-<b class="nc"><i>73</i>&nbsp;            throw new UserInfoException(e,ErrorCode.FILE_NOT_FOUND);</b>
-<b class="fc"><i>74</i>&nbsp;        } catch (IOException e) {</b>
-<b class="fc"><i>75</i>&nbsp;            throw new UserInfoException(e,ErrorCode.IO);</b>
-<b class="nc"><i>76</i>&nbsp;        }</b>
-<i>77</i>&nbsp;
-<b class="nc"><i>78</i>&nbsp;        return members;</b>
-<i>79</i>&nbsp;    }
-<i>80</i>&nbsp;
-<i>81</i>&nbsp;}
+<b class="fc"><i>68</i>&nbsp;            ois.close();</b>
+<b class="fc"><i>69</i>&nbsp;            bais.close();</b>
+<b class="nc"><i>70</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>71</i>&nbsp;            throw new UserInfoException(e,ErrorCode.IO);</b>
+<b class="fc"><i>72</i>&nbsp;        }</b>
+<b class="fc"><i>73</i>&nbsp;        return members;</b>
+<b class="fc"><i>74</i>&nbsp;    }</b>
+<b class="fc"><i>75</i>&nbsp;</b>
+<b class="nc"><i>76</i>&nbsp;}</b>
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2014-12-12 12:51</div>
+    <div style="float:right;">generated on 2014-12-12 12:56</div>
 </div>
 </body>
 </html>

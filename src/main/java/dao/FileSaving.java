@@ -47,7 +47,7 @@ public class FileSaving {
      * @return userInfos
      * @throws UserInfoException
      */
-    public  List<UserInfo> readUserInfos(String filePath) {
+    public  List<UserInfo> readUserInfos(String filePath) throws ClassNotFoundException {
         List<UserInfo> members = null;
 
         try {
@@ -67,14 +67,9 @@ public class FileSaving {
             members = (List<UserInfo>) ois.readObject();
             ois.close();
             bais.close();
-        }  catch (ClassNotFoundException e) {
-            throw new UserInfoException(e,ErrorCode.CLASS_NOT_FOUND);
-        } catch (FileNotFoundException e) {
-            throw new UserInfoException(e,ErrorCode.FILE_NOT_FOUND);
         } catch (IOException e) {
             throw new UserInfoException(e,ErrorCode.IO);
         }
-
         return members;
     }
 

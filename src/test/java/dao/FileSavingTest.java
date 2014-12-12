@@ -50,7 +50,7 @@ public class FileSavingTest {
     }
 
     @Test
-    public void testReadUserInfos() {
+    public void testReadUserInfos() throws ClassNotFoundException {
         try {
             userInfos = fileSaving.readUserInfos("userInfo.obj");
         } catch (UserInfoException e) {
@@ -60,8 +60,15 @@ public class FileSavingTest {
 
     }
     @Test(expected = UserInfoException.class)
-    public void testReadUserInfosWithException() {
+    public void testReadUserInfosWithException() throws ClassNotFoundException {
             userInfos = fileSaving.readUserInfos("userInfo2.obj");
+
+
+    }
+
+    @Test(expected = ClassNotFoundException.class)
+    public void testReadUserInfosWithExceptionClassNotFoundException() throws ClassNotFoundException {
+        userInfos = fileSaving.readUserInfos("userInfo4.obj");
 
 
     }
