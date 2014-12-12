@@ -43,6 +43,9 @@ public class UserDAO {
 
     public void saveUser(UserInfo userInfo) {
         try {
+            if (userInfo.getId() == null || userInfo.getId().equals(0)) {
+                userInfo.setId(usersList.size() + 1);
+            }
             usersList.add(userInfo);
             fileSaving.writeUserInfos(usersList, path);
         } catch (Exception e) {
@@ -52,27 +55,38 @@ public class UserDAO {
 
     public void updateUser(UserInfo userInfo) {
         try {
-            ArrayList<UserInfo> users = searchUser(userInfo.getName());
-            for (UserInfo userInfo1 : users) {
-                removeUser(userInfo1.getName());
+            UserInfo found =null;
+            for (UserInfo userInfo1 : usersList) {
+                if (userInfo1.getId().equals(userInfo.getId())) {
+                    found = userInfo1;
+                }
             }
+            usersList.remove(found);
             saveUser(userInfo);
         } catch (Exception e) {
             throw new UserInfoException(e, ErrorCode.IO);
         }
     }
 
-    public void removeUser(String name) {
+    public int  removeUser(String name) {
+        int i = 0;
+        ArrayList<UserInfo> users = new ArrayList<UserInfo>();
         for (UserInfo userInfo : usersList) {
             if (userInfo.getName().equals(name)) {
-                usersList.remove(userInfo);
+                users.add(userInfo);
+                i++;
             }
         }
+        for (UserInfo userInfo : users){
+            usersList.remove(userInfo);
+        }
+
         try {
             fileSaving.writeUserInfos(usersList, path);
         } catch (Exception e) {
             throw new UserInfoException(e, ErrorCode.IO);
         }
+        return i;
     }
 
 }

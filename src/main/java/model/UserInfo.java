@@ -17,17 +17,17 @@ public class UserInfo implements Serializable{
 
     public UserInfo() {
         setName("");
-        address = "";
+        setAddress("");
         email = "";
         setId(0);
-        phone = 0;
+        setPhone(0);
     }
 
     public UserInfo(int id, String name, String address, int phone, String email) {
         this.setId(id);
         this.setName(name);
-        this.address = address;
-        this.phone = phone;
+        this.setAddress(address);
+        this.setPhone(phone);
         this.setEmail(email);
 
 
@@ -36,8 +36,8 @@ public class UserInfo implements Serializable{
     public UserInfo(String name, String address, int phone, String email) {
 
         this.setName(name);
-        this.address = address;
-        this.phone = phone;
+        this.setAddress(address);
+        this.setPhone(phone);
         this.setEmail(email);
     }
 
@@ -65,10 +65,10 @@ public class UserInfo implements Serializable{
         UserInfo userInfo = (UserInfo) o;
 
         if (getId() != userInfo.getId()) return false;
-        else if (phone != userInfo.phone) return false;
-        else if (!address.equals(userInfo.address)) return false;
+        /*else if (getPhone() != userInfo.getPhone()) return false;
+        else if (!getAddress().equals(userInfo.getAddress())) return false;
         else if (!email.equals(userInfo.email)) return false;
-        else if (!getName().equals(userInfo.getName())) return false;
+        else if (!getName().equals(userInfo.getName())) return false;*/
 
         return true;
     }
@@ -76,10 +76,10 @@ public class UserInfo implements Serializable{
     @Override
     public int hashCode() {
         int result = getName().hashCode();
-        result = 31 * result + address.hashCode();
+        result = 31 * result + getAddress().hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + getId();
-        result = 31 * result + phone;
+        result = 31 * result + getPhone();
         return result;
     }
 
@@ -87,10 +87,10 @@ public class UserInfo implements Serializable{
     public String toString() {
         return "UserInfo{" +
                 "name='" + getName() + '\'' +
-                ", address='" + address + '\'' +
+                ", address='" + getAddress() + '\'' +
                 ", email='" + email + '\'' +
                 ", id=" + getId() +
-                ", phone=" + phone +
+                ", phone=" + getPhone() +
                 '}';
     }
 
@@ -108,5 +108,21 @@ public class UserInfo implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Integer phone) {
+        this.phone = phone;
     }
 }

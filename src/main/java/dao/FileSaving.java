@@ -43,7 +43,7 @@ public class FileSaving {
      * @throws UserInfoException
      */
     public  ArrayList<UserInfo> readUserInfos(String filePath) throws Exception {
-        ArrayList<UserInfo> members = null;
+        ArrayList<UserInfo> members = new ArrayList<UserInfo>();
 
 
             if(filePath == null){
@@ -51,7 +51,7 @@ public class FileSaving {
             }
             File f = new File(filePath);
             if (!f.exists()) {
-                throw new UserInfoException(null,ErrorCode.FILE_NOT_FOUND);
+                return members;
             }
             RandomAccessFile raf = new RandomAccessFile(f, "rw");
             raf.seek(0);
