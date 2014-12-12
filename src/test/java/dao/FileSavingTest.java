@@ -39,6 +39,8 @@ public class FileSavingTest {
         UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email") ;
         userInfos.add(userInfo);
         fileSaving.writeUserInfos(userInfos);
+        userInfos = fileSaving.readUserInfos();
+        assertFalse(userInfos.isEmpty());
 
 
     }
