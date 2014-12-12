@@ -1,7 +1,6 @@
 package model;
 
 
-import exceptions.UserInfoException;
 import utils.validators.UserValidator;
 
 import java.io.Serializable;
@@ -10,20 +9,23 @@ import java.io.Serializable;
  * Created by shahriar on 12/12/14.
  */
 public class UserInfo implements Serializable{
-    private String name, address, email;
-    private int id, phone;
+    private String name;
+    private String address;
+    private String email;
+    private Integer id;
+    private Integer phone;
 
     public UserInfo() {
-        name = "";
+        setName("");
         address = "";
         email = "";
-        id = 0;
+        setId(0);
         phone = 0;
     }
 
     public UserInfo(int id, String name, String address, int phone, String email) {
-        this.id = id;
-        this.name = name;
+        this.setId(id);
+        this.setName(name);
         this.address = address;
         this.phone = phone;
         this.setEmail(email);
@@ -33,7 +35,7 @@ public class UserInfo implements Serializable{
 
     public UserInfo(String name, String address, int phone, String email) {
 
-        this.name = name;
+        this.setName(name);
         this.address = address;
         this.phone = phone;
         this.setEmail(email);
@@ -62,21 +64,21 @@ public class UserInfo implements Serializable{
 
         UserInfo userInfo = (UserInfo) o;
 
-        if (id != userInfo.id) return false;
+        if (getId() != userInfo.getId()) return false;
         else if (phone != userInfo.phone) return false;
         else if (!address.equals(userInfo.address)) return false;
         else if (!email.equals(userInfo.email)) return false;
-        else if (!name.equals(userInfo.name)) return false;
+        else if (!getName().equals(userInfo.getName())) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
+        int result = getName().hashCode();
         result = 31 * result + address.hashCode();
         result = 31 * result + email.hashCode();
-        result = 31 * result + id;
+        result = 31 * result + getId();
         result = 31 * result + phone;
         return result;
     }
@@ -84,11 +86,27 @@ public class UserInfo implements Serializable{
     @Override
     public String toString() {
         return "UserInfo{" +
-                "name='" + name + '\'' +
+                "name='" + getName() + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                ", id=" + id +
+                ", id=" + getId() +
                 ", phone=" + phone +
                 '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

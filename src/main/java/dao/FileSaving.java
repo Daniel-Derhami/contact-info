@@ -6,7 +6,6 @@ import model.UserInfo;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shahriar on 12/12/14.
@@ -18,7 +17,7 @@ public class FileSaving {
      * @param userInfos
      * @throws UserInfoException
      */
-    public  void writeUserInfos(List<UserInfo> userInfos,String filePath) throws  Exception {
+    public  void writeUserInfos(ArrayList<UserInfo> userInfos,String filePath) throws  Exception {
 
             File f = new File(filePath);
             if (!f.exists()) {
@@ -43,8 +42,8 @@ public class FileSaving {
      * @return userInfos
      * @throws UserInfoException
      */
-    public  List<UserInfo> readUserInfos(String filePath) throws Exception {
-        List<UserInfo> members = null;
+    public  ArrayList<UserInfo> readUserInfos(String filePath) throws Exception {
+        ArrayList<UserInfo> members = null;
 
 
             if(filePath == null){
@@ -60,7 +59,7 @@ public class FileSaving {
             raf.read(b);
             ByteArrayInputStream bais = new ByteArrayInputStream(b);
             ObjectInputStream ois = new ObjectInputStream(bais);
-            members = (List<UserInfo>) ois.readObject();
+            members = (ArrayList<UserInfo>) ois.readObject();
             ois.close();
             bais.close();
 
