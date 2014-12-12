@@ -28,6 +28,8 @@ public class FileSavingTest {
     @Before
     public void setUp() throws Exception {
         userInfos = new ArrayList<UserInfo>();
+        UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email@www.dfv") ;
+        userInfos.add(userInfo);
     }
 
     /*@After
@@ -36,10 +38,9 @@ public class FileSavingTest {
 
     }*/
 
-    @Ignore
+    @Test
     public void testWriteUserInfos() {
-        UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email@www.dfv") ;
-        userInfos.add(userInfo);
+
         try {
             fileSaving.writeUserInfos(userInfos,"userInfo.obj");
         } catch (UserInfoException e) {
@@ -68,6 +69,6 @@ public class FileSavingTest {
 
     @Test(expected = UserInfoException.class)
     public void newUserByEmailWithException() {
-        UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email") ;
+        UserInfo userInfo = new UserInfo(2, "name", "adress", 21, "email") ;
     }
 }

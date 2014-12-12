@@ -48,9 +48,12 @@ public class FileSaving {
      * @throws UserInfoException
      */
     public  List<UserInfo> readUserInfos(String filePath) {
-        List<UserInfo> members = new ArrayList<UserInfo>();
+        List<UserInfo> members = null;
 
         try {
+            if(filePath == null){
+                throw new UserInfoException(null,ErrorCode.NULL);
+            }
             File f = new File(filePath);
             if (!f.exists()) {
                 throw new UserInfoException(null,ErrorCode.FILE_NOT_FOUND);
@@ -64,10 +67,12 @@ public class FileSaving {
             members = (List<UserInfo>) ois.readObject();
             ois.close();
             bais.close();
+        }  catch (ClassNotFoundException e) {
+            throw new UserInfoException(e,ErrorCode.CLASS_NOT_FOUND);
+        } catch (FileNotFoundException e) {
+            throw new UserInfoException(e,ErrorCode.FILE_NOT_FOUND);
         } catch (IOException e) {
-            throw new UserInfoException(e, ErrorCode.IO);
-        } catch (Exception e) {
-            throw new UserInfoException(e,ErrorCode.UNKNOWN);
+            throw new UserInfoException(e,ErrorCode.IO);
         }
 
         return members;

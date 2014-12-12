@@ -1,0 +1,157 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FileSavingTest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FileSavingTest (dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FileSavingTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (18/ 30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import exceptions.ErrorCode;
+<i>4</i>&nbsp;import exceptions.UserInfoException;
+<i>5</i>&nbsp;import model.UserInfo;
+<i>6</i>&nbsp;import org.junit.*;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;import java.util.ArrayList;
+<i>9</i>&nbsp;import java.util.List;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;import static org.junit.Assert.*;
+<i>12</i>&nbsp;import static org.junit.Assert.assertFalse;
+<i>13</i>&nbsp;
+<b class="fc"><i>14</i>&nbsp;public class FileSavingTest {</b>
+<i>15</i>&nbsp;
+<b class="fc"><i>16</i>&nbsp;    private static FileSaving fileSaving = null;</b>
+<b class="fc"><i>17</i>&nbsp;    private static List&lt;UserInfo&gt; userInfos = null;</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @BeforeClass
+<i>20</i>&nbsp;    public static void oneTimeSetUp() {
+<b class="fc"><i>21</i>&nbsp;        fileSaving = new FileSaving();</b>
+<b class="fc"><i>22</i>&nbsp;    }</b>
+<i>23</i>&nbsp;
+<i>24</i>&nbsp;   /* @AfterClass
+<i>25</i>&nbsp;    public static void oneTimeTearDown() {
+<i>26</i>&nbsp;    }*/
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    @Before
+<i>29</i>&nbsp;    public void setUp() throws Exception {
+<b class="fc"><i>30</i>&nbsp;        userInfos = new ArrayList&lt;UserInfo&gt;();</b>
+<b class="fc"><i>31</i>&nbsp;        UserInfo userInfo = new UserInfo(1, &quot;name&quot;, &quot;adress&quot;, 21, &quot;email@www.dfv&quot;) ;</b>
+<b class="fc"><i>32</i>&nbsp;        userInfos.add(userInfo);</b>
+<b class="fc"><i>33</i>&nbsp;    }</b>
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;    /*@After
+<i>36</i>&nbsp;    public void tearDown() throws Exception {
+<i>37</i>&nbsp;        userInfos = null;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    }*/
+<i>40</i>&nbsp;
+<b class="nc"><i>41</i>&nbsp;    @Test</b>
+<b class="nc"><i>42</i>&nbsp;    public void testWriteUserInfos() {</b>
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;        try {</b>
+<b class="fc"><i>45</i>&nbsp;            fileSaving.writeUserInfos(userInfos,&quot;userInfo.obj&quot;);</b>
+<b class="nc"><i>46</i>&nbsp;        } catch (UserInfoException e) {</b>
+<b class="nc"><i>47</i>&nbsp;            assertEquals(e.getErrorCode(), ErrorCode.UNKNOWN);</b>
+<b class="fc"><i>48</i>&nbsp;        }</b>
+<i>49</i>&nbsp;
+<b class="fc"><i>50</i>&nbsp;    }</b>
+<i>51</i>&nbsp;
+<i>52</i>&nbsp;    @Test
+<i>53</i>&nbsp;    public void testReadUserInfos() {
+<b class="fc"><i>54</i>&nbsp;        try {</b>
+<b class="fc"><i>55</i>&nbsp;            userInfos = fileSaving.readUserInfos(&quot;userInfo.obj&quot;);</b>
+<b class="fc"><i>56</i>&nbsp;        } catch (UserInfoException e) {</b>
+<b class="fc"><i>57</i>&nbsp;            assertEquals(e.getErrorCode(), ErrorCode.UNKNOWN);</b>
+<b class="nc"><i>58</i>&nbsp;        }</b>
+<b class="nc"><i>59</i>&nbsp;        assertFalse(userInfos.isEmpty());</b>
+<i>60</i>&nbsp;
+<b class="nc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;    @Test(expected = UserInfoException.class)
+<b class="fc"><i>63</i>&nbsp;    public void testReadUserInfosWithException() {</b>
+<b class="nc"><i>64</i>&nbsp;            userInfos = fileSaving.readUserInfos(&quot;userInfo2.obj&quot;);</b>
+<i>65</i>&nbsp;
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;    }</b>
+<i>68</i>&nbsp;
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;    @Test(expected = UserInfoException.class)
+<b class="fc"><i>71</i>&nbsp;    public void newUserByEmailWithException() {</b>
+<b class="nc"><i>72</i>&nbsp;        UserInfo userInfo = new UserInfo(2, &quot;name&quot;, &quot;adress&quot;, 21, &quot;email&quot;) ;</b>
+<b class="nc"><i>73</i>&nbsp;    }</b>
+<i>74</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2014-12-12 12:51</div>
+</div>
+</body>
+</html>
