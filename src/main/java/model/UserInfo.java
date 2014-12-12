@@ -1,6 +1,9 @@
 package model;
 
 
+import exceptions.UserInfoException;
+import utils.validators.UserValidator;
+
 import java.io.Serializable;
 
 /**
@@ -23,7 +26,13 @@ public class UserInfo implements Serializable{
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.email = email;
+        if (UserValidator.validateEmail(email)){
+            this.email = email;
+        }else{
+            throw new UserInfoException(new Exception("email format is not correct"));
+        }
+
+
     }
 
 

@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.UserInfoException;
 import model.UserInfo;
 import org.junit.*;
 
@@ -16,36 +17,40 @@ public class FileSavingTest {
     @BeforeClass
     public static void oneTimeSetUp() {
         fileSaving = new FileSaving();
-        userInfos = new ArrayList<UserInfo>();
     }
 
-    @AfterClass
+   /* @AfterClass
     public static void oneTimeTearDown() {
-    }
+    }*/
 
     @Before
     public void setUp() throws Exception {
-
+        userInfos = new ArrayList<UserInfo>();
     }
 
-    @After
+    /*@After
     public void tearDown() throws Exception {
         userInfos = null;
 
-    }
+    }*/
 
-    @Test
+    @Ignore
     public void testWriteUserInfos() throws Exception {
-        UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email") ;
+        UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email@www.dfv") ;
         userInfos.add(userInfo);
         fileSaving.writeUserInfos(userInfos);
 
     }
 
-    @Test
+    @Ignore
     public void testReadUserInfos() throws Exception {
         userInfos = fileSaving.readUserInfos();
         assertFalse(userInfos.isEmpty());
 
+    }
+
+    @Test(expected = UserInfoException.class)
+    public void newUserByEmailWithException() {
+        UserInfo userInfo = new UserInfo(1, "name", "adress", 21, "email") ;
     }
 }
