@@ -85,10 +85,10 @@ public class UserInfo implements Serializable{
         UserInfo userInfo = (UserInfo) o;
 
         if (id != userInfo.id) return false;
-        if (phone != userInfo.phone) return false;
-        if (!address.equals(userInfo.address)) return false;
-        if (!email.equals(userInfo.email)) return false;
-        if (!name.equals(userInfo.name)) return false;
+        else if (phone != userInfo.phone) return false;
+        else if (!address.equals(userInfo.address)) return false;
+        else if (!email.equals(userInfo.email)) return false;
+        else if (!name.equals(userInfo.name)) return false;
 
         return true;
     }

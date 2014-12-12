@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.UserInfoException;
 import model.UserInfo;
 
 import java.io.*;
@@ -10,8 +11,13 @@ import java.util.List;
  * Created by shahriar on 12/12/14.
  */
 public class FileSaving {
-
-    public void writeUserInfos(List<UserInfo> userInfos) {
+    /**
+     * write list of userInfo in file
+     *
+     * @param userInfos
+     * @throws UserInfoException
+     */
+    public  void writeUserInfos(List<UserInfo> userInfos)  {
         try {
             File f = new File("userInfo.obj");
             if (!f.exists()) {
@@ -28,14 +34,19 @@ public class FileSaving {
             oos.close();
             baos.close();
         } catch (IOException e) {
-           throw new RuntimeException(e.getMessage());
+            throw new UserInfoException(e);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new UserInfoException(e);
         }
     }
 
-
-    public List<UserInfo> readUserInfos() {
+    /**
+     * read list of userInfos from file
+     *
+     * @return userInfos
+     * @throws UserInfoException
+     */
+    public  List<UserInfo> readUserInfos(){
         List<UserInfo> members = new ArrayList<UserInfo>();
 
         try {
@@ -48,16 +59,16 @@ public class FileSaving {
             byte b[] = new byte[10000];
             raf.read(b);
             ByteArrayInputStream bais = new ByteArrayInputStream(b);
-            ObjectInputStream ois = new ObjectInputStream((InputStream) bais);
+            ObjectInputStream ois = new ObjectInputStream(bais);
             members = (List<UserInfo>) ois.readObject();
             ois.close();
             bais.close();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new UserInfoException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new UserInfoException(e);
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            throw new UserInfoException(e);
         }
 
         return members;
