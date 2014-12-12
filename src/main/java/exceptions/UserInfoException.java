@@ -11,14 +11,15 @@ public class UserInfoException extends RuntimeException {
     private Exception origException;
     private String date;
     private String time;
-
-    public UserInfoException(Exception origException){
+    private ErrorCode errorCode;
+    public UserInfoException(Exception origException,ErrorCode errorCode){
         setOrigException(origException);
         Calendar cal = Calendar.getInstance();
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat tf = new SimpleDateFormat("HH:mm:ss");
         setDate(df.format(cal.getTime()));
         setTime(tf.format(cal.getTime()));
+        this.setErrorCode(errorCode);
     }
     public Exception getOrigException() {
         return origException;
@@ -42,5 +43,13 @@ public class UserInfoException extends RuntimeException {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(ErrorCode errorCode) {
+        this.errorCode = errorCode;
     }
 }

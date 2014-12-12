@@ -47,7 +47,7 @@ public class UserInfo implements Serializable{
         if (UserValidator.validateEmail(email)){
             this.email = email;
         }else{
-            throw new UserInfoException(new Exception("email format is not correct"));
+           // throw new UserInfoException(new Exception("email format is not correct"));
         }
     }
 

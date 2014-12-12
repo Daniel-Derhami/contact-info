@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.ErrorCode;
 import exceptions.UserInfoException;
 import model.UserInfo;
 
@@ -17,9 +18,9 @@ public class FileSaving {
      * @param userInfos
      * @throws UserInfoException
      */
-    public  void writeUserInfos(List<UserInfo> userInfos)  {
+    public  void writeUserInfos(List<UserInfo> userInfos,String filePath) throws  UserInfoException {
         try {
-            File f = new File("userInfo.obj");
+            File f = new File(filePath);
             if (!f.exists()) {
                 f.createNewFile();
             }
@@ -34,9 +35,9 @@ public class FileSaving {
             oos.close();
             baos.close();
         } catch (IOException e) {
-            throw new UserInfoException(e);
+            throw new UserInfoException(e,ErrorCode.IO);
         } catch (Exception e) {
-            throw new UserInfoException(e);
+            throw new UserInfoException(e,ErrorCode.UNKNOWN);
         }
     }
 
@@ -46,13 +47,13 @@ public class FileSaving {
      * @return userInfos
      * @throws UserInfoException
      */
-    public  List<UserInfo> readUserInfos(){
+    public  List<UserInfo> readUserInfos(String filePath) {
         List<UserInfo> members = new ArrayList<UserInfo>();
 
         try {
-            File f = new File("userInfo.obj");
+            File f = new File(filePath);
             if (!f.exists()) {
-                return members;
+                throw new UserInfoException(null,ErrorCode.FILE_NOT_FOUND);
             }
             RandomAccessFile raf = new RandomAccessFile(f, "rw");
             raf.seek(0);
@@ -63,12 +64,10 @@ public class FileSaving {
             members = (List<UserInfo>) ois.readObject();
             ois.close();
             bais.close();
-        } catch (ClassNotFoundException e) {
-            throw new UserInfoException(e);
         } catch (IOException e) {
-            throw new UserInfoException(e);
+            throw new UserInfoException(e, ErrorCode.IO);
         } catch (Exception e) {
-            throw new UserInfoException(e);
+            throw new UserInfoException(e,ErrorCode.UNKNOWN);
         }
 
         return members;
