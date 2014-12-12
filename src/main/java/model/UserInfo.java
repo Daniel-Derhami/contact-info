@@ -1,11 +1,11 @@
 package model;
 
-import java.io.Serializable;
+
 
 /**
  * Created by shahriar on 12/12/14.
  */
-public class UserInfo implements Serializable{
+public class UserInfo {
     private String name, address, email;
     private int id, phone;
 
