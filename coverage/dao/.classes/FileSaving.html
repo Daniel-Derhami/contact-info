@@ -80,74 +80,73 @@
 <i>6</i>&nbsp;
 <i>7</i>&nbsp;import java.io.*;
 <i>8</i>&nbsp;import java.util.ArrayList;
-<i>9</i>&nbsp;import java.util.List;
-<i>10</i>&nbsp;
-<i>11</i>&nbsp;/**
-<i>12</i>&nbsp; * Created by shahriar on 12/12/14.
-<i>13</i>&nbsp; */
-<b class="fc"><i>14</i>&nbsp;public class FileSaving {</b>
-<i>15</i>&nbsp;    /**
-<i>16</i>&nbsp;     * write list of userInfo in file
-<i>17</i>&nbsp;     *
-<i>18</i>&nbsp;     * @param userInfos
-<i>19</i>&nbsp;     * @throws UserInfoException
-<i>20</i>&nbsp;     */
-<i>21</i>&nbsp;    public  void writeUserInfos(List&lt;UserInfo&gt; userInfos,String filePath) throws  Exception {
-<i>22</i>&nbsp;
-<b class="fc"><i>23</i>&nbsp;            File f = new File(filePath);</b>
-<b class="pc"><i>24</i>&nbsp;            if (!f.exists()) {</b>
-<b class="nc"><i>25</i>&nbsp;                f.createNewFile();</b>
-<i>26</i>&nbsp;            }
-<b class="fc"><i>27</i>&nbsp;            RandomAccessFile raf = new RandomAccessFile(f, &quot;rw&quot;);</b>
-<b class="fc"><i>28</i>&nbsp;            ByteArrayOutputStream baos = new ByteArrayOutputStream();</b>
-<b class="fc"><i>29</i>&nbsp;            ObjectOutputStream oos = new ObjectOutputStream(baos);</b>
-<b class="fc"><i>30</i>&nbsp;            oos.writeObject(userInfos);</b>
-<b class="fc"><i>31</i>&nbsp;            byte b[] = baos.toByteArray();</b>
-<b class="fc"><i>32</i>&nbsp;            raf.seek(0);</b>
-<b class="fc"><i>33</i>&nbsp;            raf.write(b);</b>
-<b class="fc"><i>34</i>&nbsp;            raf.close();</b>
-<b class="fc"><i>35</i>&nbsp;            oos.close();</b>
-<b class="fc"><i>36</i>&nbsp;            baos.close();</b>
-<b class="nc"><i>37</i>&nbsp;</b>
-<b class="fc"><i>38</i>&nbsp;    }</b>
-<b class="nc"><i>39</i>&nbsp;</b>
-<b class="nc"><i>40</i>&nbsp;    /**</b>
-<b class="fc"><i>41</i>&nbsp;     * read list of userInfos from file</b>
-<b class="nc"><i>42</i>&nbsp;     *</b>
-<i>43</i>&nbsp;     * @return userInfos
-<i>44</i>&nbsp;     * @throws UserInfoException
-<i>45</i>&nbsp;     */
-<i>46</i>&nbsp;    public  List&lt;UserInfo&gt; readUserInfos(String filePath) throws Exception {
-<b class="fc"><i>47</i>&nbsp;        List&lt;UserInfo&gt; members = null;</b>
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * Created by shahriar on 12/12/14.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;public class FileSaving {
+<b class="fc"><i>14</i>&nbsp;    /**</b>
+<i>15</i>&nbsp;     * write list of userInfo in file
+<i>16</i>&nbsp;     *
+<i>17</i>&nbsp;     * @param userInfos
+<i>18</i>&nbsp;     * @throws UserInfoException
+<i>19</i>&nbsp;     */
+<i>20</i>&nbsp;    public  void writeUserInfos(ArrayList&lt;UserInfo&gt; userInfos,String filePath) throws  Exception {
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;            File f = new File(filePath);
+<b class="fc"><i>23</i>&nbsp;            if (!f.exists()) {</b>
+<b class="pc"><i>24</i>&nbsp;                f.createNewFile();</b>
+<b class="nc"><i>25</i>&nbsp;            }</b>
+<i>26</i>&nbsp;            RandomAccessFile raf = new RandomAccessFile(f, &quot;rw&quot;);
+<b class="fc"><i>27</i>&nbsp;            ByteArrayOutputStream baos = new ByteArrayOutputStream();</b>
+<b class="fc"><i>28</i>&nbsp;            ObjectOutputStream oos = new ObjectOutputStream(baos);</b>
+<b class="fc"><i>29</i>&nbsp;            oos.writeObject(userInfos);</b>
+<b class="fc"><i>30</i>&nbsp;            byte b[] = baos.toByteArray();</b>
+<b class="fc"><i>31</i>&nbsp;            raf.seek(0);</b>
+<b class="fc"><i>32</i>&nbsp;            raf.write(b);</b>
+<b class="fc"><i>33</i>&nbsp;            raf.close();</b>
+<b class="fc"><i>34</i>&nbsp;            oos.close();</b>
+<b class="fc"><i>35</i>&nbsp;            baos.close();</b>
+<b class="fc"><i>36</i>&nbsp;</b>
+<b class="nc"><i>37</i>&nbsp;    }</b>
+<b class="fc"><i>38</i>&nbsp;</b>
+<b class="nc"><i>39</i>&nbsp;    /**</b>
+<b class="nc"><i>40</i>&nbsp;     * read list of userInfos from file</b>
+<b class="fc"><i>41</i>&nbsp;     *</b>
+<b class="nc"><i>42</i>&nbsp;     * @return userInfos</b>
+<i>43</i>&nbsp;     * @throws UserInfoException
+<i>44</i>&nbsp;     */
+<i>45</i>&nbsp;    public  ArrayList&lt;UserInfo&gt; readUserInfos(String filePath) throws Exception {
+<i>46</i>&nbsp;        ArrayList&lt;UserInfo&gt; members = null;
+<b class="fc"><i>47</i>&nbsp;</b>
 <i>48</i>&nbsp;
-<i>49</i>&nbsp;
-<b class="fc"><i>50</i>&nbsp;            if(filePath == null){</b>
-<b class="fc"><i>51</i>&nbsp;                throw new UserInfoException(null,ErrorCode.NULL);</b>
-<i>52</i>&nbsp;            }
-<b class="fc"><i>53</i>&nbsp;            File f = new File(filePath);</b>
-<b class="pc"><i>54</i>&nbsp;            if (!f.exists()) {</b>
-<b class="fc"><i>55</i>&nbsp;                throw new UserInfoException(null,ErrorCode.FILE_NOT_FOUND);</b>
-<i>56</i>&nbsp;            }
-<b class="fc"><i>57</i>&nbsp;            RandomAccessFile raf = new RandomAccessFile(f, &quot;rw&quot;);</b>
-<b class="fc"><i>58</i>&nbsp;            raf.seek(0);</b>
-<b class="fc"><i>59</i>&nbsp;            byte b[] = new byte[10000];</b>
-<b class="nc"><i>60</i>&nbsp;            raf.read(b);</b>
-<b class="fc"><i>61</i>&nbsp;            ByteArrayInputStream bais = new ByteArrayInputStream(b);</b>
-<b class="fc"><i>62</i>&nbsp;            ObjectInputStream ois = new ObjectInputStream(bais);</b>
-<b class="fc"><i>63</i>&nbsp;            members = (List&lt;UserInfo&gt;) ois.readObject();</b>
-<b class="fc"><i>64</i>&nbsp;            ois.close();</b>
-<b class="fc"><i>65</i>&nbsp;            bais.close();</b>
-<b class="fc"><i>66</i>&nbsp;</b>
-<b class="fc"><i>67</i>&nbsp;        return members;</b>
-<b class="fc"><i>68</i>&nbsp;    }</b>
-<b class="fc"><i>69</i>&nbsp;</b>
-<i>70</i>&nbsp;}
+<i>49</i>&nbsp;            if(filePath == null){
+<b class="fc"><i>50</i>&nbsp;                throw new UserInfoException(null,ErrorCode.NULL);</b>
+<b class="fc"><i>51</i>&nbsp;            }</b>
+<i>52</i>&nbsp;            File f = new File(filePath);
+<b class="fc"><i>53</i>&nbsp;            if (!f.exists()) {</b>
+<b class="pc"><i>54</i>&nbsp;                throw new UserInfoException(null,ErrorCode.FILE_NOT_FOUND);</b>
+<b class="fc"><i>55</i>&nbsp;            }</b>
+<i>56</i>&nbsp;            RandomAccessFile raf = new RandomAccessFile(f, &quot;rw&quot;);
+<b class="fc"><i>57</i>&nbsp;            raf.seek(0);</b>
+<b class="fc"><i>58</i>&nbsp;            byte b[] = new byte[10000];</b>
+<b class="fc"><i>59</i>&nbsp;            raf.read(b);</b>
+<b class="nc"><i>60</i>&nbsp;            ByteArrayInputStream bais = new ByteArrayInputStream(b);</b>
+<b class="fc"><i>61</i>&nbsp;            ObjectInputStream ois = new ObjectInputStream(bais);</b>
+<b class="fc"><i>62</i>&nbsp;            members = (ArrayList&lt;UserInfo&gt;) ois.readObject();</b>
+<b class="fc"><i>63</i>&nbsp;            ois.close();</b>
+<b class="fc"><i>64</i>&nbsp;            bais.close();</b>
+<b class="fc"><i>65</i>&nbsp;</b>
+<b class="fc"><i>66</i>&nbsp;        return members;</b>
+<b class="fc"><i>67</i>&nbsp;    }</b>
+<b class="fc"><i>68</i>&nbsp;</b>
+<b class="fc"><i>69</i>&nbsp;}</b>
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2014-12-12 13:11</div>
+    <div style="float:right;">generated on 2014-12-12 14:39</div>
 </div>
 </body>
 </html>

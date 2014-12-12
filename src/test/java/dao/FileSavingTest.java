@@ -14,7 +14,7 @@ import static org.junit.Assert.assertFalse;
 public class FileSavingTest {
 
     private static FileSaving fileSaving = null;
-    private static List<UserInfo> userInfos = null;
+    private static ArrayList<UserInfo> userInfos = null;
 
     @BeforeClass
     public static void oneTimeSetUp() {
