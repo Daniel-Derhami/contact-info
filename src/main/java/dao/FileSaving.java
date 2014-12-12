@@ -18,8 +18,8 @@ public class FileSaving {
      * @param userInfos
      * @throws UserInfoException
      */
-    public  void writeUserInfos(List<UserInfo> userInfos,String filePath) throws  UserInfoException {
-        try {
+    public  void writeUserInfos(List<UserInfo> userInfos,String filePath) throws  Exception {
+
             File f = new File(filePath);
             if (!f.exists()) {
                 f.createNewFile();
@@ -34,11 +34,7 @@ public class FileSaving {
             raf.close();
             oos.close();
             baos.close();
-        } catch (IOException e) {
-            throw new UserInfoException(e,ErrorCode.IO);
-        } catch (Exception e) {
-            throw new UserInfoException(e,ErrorCode.UNKNOWN);
-        }
+
     }
 
     /**
@@ -47,10 +43,10 @@ public class FileSaving {
      * @return userInfos
      * @throws UserInfoException
      */
-    public  List<UserInfo> readUserInfos(String filePath) throws ClassNotFoundException {
+    public  List<UserInfo> readUserInfos(String filePath) throws Exception {
         List<UserInfo> members = null;
 
-        try {
+
             if(filePath == null){
                 throw new UserInfoException(null,ErrorCode.NULL);
             }
@@ -67,9 +63,7 @@ public class FileSaving {
             members = (List<UserInfo>) ois.readObject();
             ois.close();
             bais.close();
-        } catch (IOException e) {
-            throw new UserInfoException(e,ErrorCode.IO);
-        }
+
         return members;
     }
 

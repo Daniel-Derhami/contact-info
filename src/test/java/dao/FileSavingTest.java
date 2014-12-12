@@ -39,7 +39,7 @@ public class FileSavingTest {
     }*/
 
     @Test
-    public void testWriteUserInfos() {
+    public void testWriteUserInfos() throws Exception {
 
         try {
             fileSaving.writeUserInfos(userInfos,"userInfo.obj");
@@ -49,8 +49,17 @@ public class FileSavingTest {
 
     }
 
+    @Test(expected = Exception.class)
+    public void testWriteUserInfosWith() throws Exception {
+
+
+            fileSaving.writeUserInfos(userInfos,"userInfo.obj");
+
+
+    }
+
     @Test
-    public void testReadUserInfos() throws ClassNotFoundException {
+    public void testReadUserInfos() throws Exception {
         try {
             userInfos = fileSaving.readUserInfos("userInfo.obj");
         } catch (UserInfoException e) {
@@ -59,15 +68,26 @@ public class FileSavingTest {
         assertFalse(userInfos.isEmpty());
 
     }
+    @Test
+    public void testReadUserInfosWithFileNotFoundnd() throws Exception {
+        UserInfoException e = null;
+        try {
+            userInfos = fileSaving.readUserInfos("badArgs.txt");
+        } catch (UserInfoException e1) {
+            e=e1;
+        }
+        assertEquals(e.getErrorCode(), ErrorCode.FILE_NOT_FOUND);
+
+    }
     @Test(expected = UserInfoException.class)
-    public void testReadUserInfosWithException() throws ClassNotFoundException {
+    public void testReadUserInfosWithException() throws Exception {
             userInfos = fileSaving.readUserInfos("userInfo2.obj");
 
 
     }
 
     @Test(expected = ClassNotFoundException.class)
-    public void testReadUserInfosWithExceptionClassNotFoundException() throws ClassNotFoundException {
+    public void testReadUserInfosWithExceptionClassNotFoundException() throws Exception {
         userInfos = fileSaving.readUserInfos("userInfo4.obj");
 
 
