@@ -5,7 +5,6 @@ import exceptions.UserInfoException;
 import model.UserInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shahriar on 12/12/14.
@@ -16,11 +15,11 @@ public class UserDAO {
     private String path;
 
     public UserDAO(String path) {
-        this.path = path;
-        usersList = new ArrayList<UserInfo>();
-        fileSaving = new FileSaving();
+        this.setPath(path);
+        setUsersList(new ArrayList<UserInfo>());
+        setFileSaving(new FileSaving());
         try {
-            usersList = fileSaving.readUserInfos(path);
+            setUsersList(getFileSaving().readUserInfos(path));
         } catch (Exception e) {
             throw new UserInfoException(e, ErrorCode.IO);
         }
@@ -30,7 +29,7 @@ public class UserDAO {
 
     public ArrayList<UserInfo> searchUser(String name) {
         ArrayList<UserInfo> users = new ArrayList<UserInfo>();
-        for (UserInfo userInfo : usersList) {
+        for (UserInfo userInfo : getUsersList()) {
             if (userInfo.getName() != null && userInfo.getName().equals(name)) {
                 users.add(userInfo);
             }
@@ -41,27 +40,28 @@ public class UserDAO {
     }
 
 
-    public void saveUser(UserInfo userInfo) {
+    public UserInfo saveUser(UserInfo userInfo) {
         try {
             if (userInfo.getId() == null || userInfo.getId().equals(0)) {
-                userInfo.setId(usersList.size() + 1);
+                userInfo.setId(getUsersList().size() + 1);
             }
-            usersList.add(userInfo);
-            fileSaving.writeUserInfos(usersList, path);
+            getUsersList().add(userInfo);
+            getFileSaving().writeUserInfos(getUsersList(), getPath());
         } catch (Exception e) {
             throw new UserInfoException(e, ErrorCode.IO);
         }
+        return userInfo;
     }
 
     public void updateUser(UserInfo userInfo) {
         try {
             UserInfo found =null;
-            for (UserInfo userInfo1 : usersList) {
+            for (UserInfo userInfo1 : getUsersList()) {
                 if (userInfo1.getId().equals(userInfo.getId())) {
                     found = userInfo1;
                 }
             }
-            usersList.remove(found);
+            getUsersList().remove(found);
             saveUser(userInfo);
         } catch (Exception e) {
             throw new UserInfoException(e, ErrorCode.IO);
@@ -71,22 +71,45 @@ public class UserDAO {
     public int  removeUser(String name) {
         int i = 0;
         ArrayList<UserInfo> users = new ArrayList<UserInfo>();
-        for (UserInfo userInfo : usersList) {
+        for (UserInfo userInfo : getUsersList()) {
             if (userInfo.getName().equals(name)) {
                 users.add(userInfo);
                 i++;
             }
         }
         for (UserInfo userInfo : users){
-            usersList.remove(userInfo);
+            getUsersList().remove(userInfo);
         }
 
         try {
-            fileSaving.writeUserInfos(usersList, path);
+            getFileSaving().writeUserInfos(getUsersList(), getPath());
         } catch (Exception e) {
             throw new UserInfoException(e, ErrorCode.IO);
         }
         return i;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public FileSaving getFileSaving() {
+        return fileSaving;
+    }
+
+    public void setFileSaving(FileSaving fileSaving) {
+        this.fileSaving = fileSaving;
+    }
+
+    public ArrayList<UserInfo> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(ArrayList<UserInfo> usersList) {
+        this.usersList = usersList;
+    }
 }
